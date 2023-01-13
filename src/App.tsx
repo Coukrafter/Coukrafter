@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout/Layout";
-import { DeletedPage, HomePage, NotFoundPage, TodoListPage } from "./pages";
+import { DeletedPage, HomePage, NotFoundPage, TodoListPage } from "src/pages";
 
 export default function App() {
   return (
