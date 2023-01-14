@@ -1,17 +1,15 @@
+import { useSelector } from "react-redux";
+import { equals } from "ramda";
 import { ListOfItems, ListItem } from "src/components";
+import { getListOfTodoLists } from "../features/ListOfTodoLists/selectors";
 
 export default function ListOfTodoLists() {
-  const items = [
-    {
-      title: "Title TODO",
-      tasks: ["Task1, Task2, Task3"],
-    },
-  ];
+  const listOfTodoLists = useSelector(getListOfTodoLists, equals);
 
   return (
     <ListOfItems>
-      {items.map(({ title, tasks }) => (
-        <ListItem title={title} tasks={tasks} />
+      {listOfTodoLists.map((listItem) => (
+        <ListItem key={`listOfTodoLists-${listItem.id}`} item={listItem} />
       ))}
     </ListOfItems>
   );
