@@ -22,8 +22,11 @@ export function todoListsReducer(
 
     case "HOME_PAGE.TODO_LISTS.FETCH.SUCCESS": {
       const { todoLists } = action.payload;
-      console.log(todoLists);
       return { ...state, isLoading: false, todoLists };
+    }
+
+    case "HOME_PAGE.TODO_LISTS.FETCH.FAILURE": {
+      return { ...state, isLoading: false };
     }
     default:
       return initialState;

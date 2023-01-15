@@ -1,38 +1,27 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { TaskItem, ListOfItems } from "src/components";
+
+import TodoList from "./components/TodoList";
+import { todoListFetch } from "./features/TodoList/actions";
+import { getTodoListTitle } from "./features/TodoList/selectors";
 
 export default function TodoListPage() {
   const { listId } = useParams();
+  const dispatch = useDispatch();
+  const todoListTitle = useSelector(getTodoListTitle);
 
-  const mockItems = [
-    {
-      title: "Title TODO",
-      deadline: new Date(),
-      text: "lorem ipsum bla bla lorem ipsum bla bla lorem ipsum bla bla",
-    },
-    {
-      title: "Title TODO 2",
-      deadline: new Date(),
-      text: "lorem ipsum bla bla lorem ipsum bla bla lorem ipsum bla bla",
-    },
-    {
-      title: "Title TODO 3",
-      deadline: new Date(),
-      text: "lorem ipsum bla bla lorem ipsum bla bla lorem ipsum bla bla",
-    },
-  ];
+  useEffect(() => {
+    listId && dispatch(todoListFetch(parseInt(listId)));
+  }, []);
 
   return (
     <div>
       <div>
-        <h1>Home Page</h1>
+        <h1>{todoListTitle || "Loading todo list"}</h1>
       </div>
       <div>Search bar</div>
-      <ListOfItems>
-        {mockItems.map(({ deadline, text, title }) => (
-          <TaskItem deadline={deadline} text={text} title={title} />
-        ))}
-      </ListOfItems>
+      <TodoList />
     </div>
   );
 }

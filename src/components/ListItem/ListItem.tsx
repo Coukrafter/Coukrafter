@@ -5,18 +5,20 @@ type Props = {
 };
 
 export default function ListItem({
-  item: { id: listId, title, tasks },
+  item: { id: listId, title, items },
 }: Props) {
   return (
     <li>
-      <div>
-        <h3>{title}</h3>
-      </div>
-      <div>
-        {tasks?.map(({ name, id: taskId }) => (
-          <p key={`todoLists-${listId}-task-${taskId}`}>{name}</p>
-        ))}
-      </div>
+      <a href={`/todo_list/${listId}`}>
+        <div>
+          <h3>{title}</h3>
+        </div>
+        <div>
+          {items.map(({ name, id: itemId }) => (
+            <p key={`todoLists-${listId}-item-${itemId}`}>{name}</p>
+          ))}
+        </div>
+      </a>
     </li>
   );
 }
