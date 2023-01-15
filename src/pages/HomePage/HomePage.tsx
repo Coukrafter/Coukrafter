@@ -2,7 +2,7 @@ import TodoLists from "./components/TodoListsList";
 
 export default function HomePage() {
   return (
-    <div>
+    <div className="py-10">
       <div>
         <h1>Home Page</h1>
       </div>
