@@ -6,39 +6,9 @@ export type TodoListsState = {
   todoLists: TodoListItem[];
 };
 
-const mockTodoLists: TodoListItem[] = [
-  {
-    id: 1,
-    title: "Title TODO",
-    tasks: [
-      { id: 1, name: "Task1" },
-      { id: 2, name: "Task2" },
-      { id: 3, name: "Task3" },
-    ],
-  },
-  {
-    id: 2,
-    title: "Title TODO 2",
-    tasks: [],
-  },
-  {
-    id: 3,
-    title: "Title TODO 3",
-    tasks: [
-      { id: 1, name: "Task1" },
-      { id: 2, name: "Task2" },
-    ],
-  },
-  {
-    id: 4,
-    title: "Title TODO 4",
-    tasks: [{ id: 1, name: "Task1" }],
-  },
-];
-
 const initialState: TodoListsState = {
   isLoading: false,
-  todoLists: mockTodoLists,
+  todoLists: [],
 };
 
 export function todoListsReducer(
@@ -48,6 +18,12 @@ export function todoListsReducer(
   switch (action.type) {
     case "HOME_PAGE.TODO_LISTS.FETCH": {
       return { ...state, isLoading: true };
+    }
+
+    case "HOME_PAGE.TODO_LISTS.FETCH.SUCCESS": {
+      const { todoLists } = action.payload;
+      console.log(todoLists);
+      return { ...state, isLoading: false, todoLists };
     }
     default:
       return initialState;

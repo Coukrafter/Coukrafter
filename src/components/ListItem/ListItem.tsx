@@ -13,7 +13,7 @@ export default function ListItem({
         <h3>{title}</h3>
       </div>
       <div>
-        {tasks.map(({ name, id: taskId }) => (
+        {tasks?.map(({ name, id: taskId }) => (
           <p key={`todoLists-${listId}-task-${taskId}`}>{name}</p>
         ))}
       </div>
