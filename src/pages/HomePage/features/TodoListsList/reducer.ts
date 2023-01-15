@@ -1,12 +1,12 @@
 import { TodoListItem } from "src/types";
-import { ListOfTodoListsActions } from "./actions";
+import { TodoListsActions } from "./actions";
 
-export type ListOfTodoListsState = {
+export type TodoListsState = {
   isLoading: boolean;
-  listOfTodoLists: TodoListItem[];
+  todoLists: TodoListItem[];
 };
 
-const mockListOfTodoLists: TodoListItem[] = [
+const mockTodoLists: TodoListItem[] = [
   {
     id: 1,
     title: "Title TODO",
@@ -36,17 +36,17 @@ const mockListOfTodoLists: TodoListItem[] = [
   },
 ];
 
-const initialState: ListOfTodoListsState = {
+const initialState: TodoListsState = {
   isLoading: false,
-  listOfTodoLists: mockListOfTodoLists,
+  todoLists: mockTodoLists,
 };
 
-export function listOfTodoListsReducer(
-  state: ListOfTodoListsState = initialState,
-  action: ListOfTodoListsActions
+export function todoListsReducer(
+  state: TodoListsState = initialState,
+  action: TodoListsActions
 ) {
   switch (action.type) {
-    case "HOME_PAGE.LIST_OF_TODO_LISTS.FETCH": {
+    case "HOME_PAGE.TODO_LISTS.FETCH": {
       return { ...state, isLoading: true };
     }
     default:

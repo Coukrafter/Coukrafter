@@ -1,13 +1,10 @@
 import { combineReducers } from "redux";
-import {
-  listOfTodoListsReducer,
-  ListOfTodoListsState,
-} from "./ListOfTodoLists/reducer";
+import { todoListsReducer, TodoListsState } from "./TodoListsList/reducer";
 
 export type HomePageState = {
-  listOfTodoLists: ListOfTodoListsState;
+  todoLists: TodoListsState;
 };
 
 export const homePageReducer = combineReducers<HomePageState>({
-  listOfTodoLists: listOfTodoListsReducer,
+  todoLists: todoListsReducer,
 });

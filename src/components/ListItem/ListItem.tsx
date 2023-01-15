@@ -14,7 +14,7 @@ export default function ListItem({
       </div>
       <div>
         {tasks.map(({ name, id: taskId }) => (
-          <p key={`listOfTodoLists-${listId}-task-${taskId}`}>{name}</p>
+          <p key={`todoLists-${listId}-task-${taskId}`}>{name}</p>
         ))}
       </div>
     </li>

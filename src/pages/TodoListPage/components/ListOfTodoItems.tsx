@@ -1,6 +1,6 @@
 import { TaskItem, ListOfItems } from "src/components";
 
-export default function ListOfTodoItems() {
+export default function TodoItems() {
   const items = [
     {
       title: "Title TODO",
