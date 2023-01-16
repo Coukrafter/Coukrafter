@@ -1,4 +1,5 @@
-import Modal from "src/components/common/Modal/Modal";
+import { Modal } from "src/components";
+
 import NewTodoItemForm, { NEW_TODO_ITEM_FORM_ID } from "./NewTodoItemForm";
 
 type Props = {
@@ -10,7 +11,10 @@ export default function NewTodoItemModalForm({ isOpen, setIsOpen }: Props) {
   const handleClose = () => {
     setIsOpen(false);
   };
-  const handleSubmit = () => {};
+
+  const handleSubmit = () => {
+    setIsOpen(false);
+  };
 
   return (
     <Modal

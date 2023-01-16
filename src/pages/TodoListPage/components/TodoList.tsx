@@ -5,14 +5,21 @@ import { useSelector } from "react-redux";
 import { TaskItem, ListOfItems } from "src/components";
 
 import { getTodoListItems } from "../features/TodoList/selectors";
+import AddNewItemCard from "./AddNewItemCard";
 import NewTodoItemModalForm from "./NewTodoItemModalForm";
 
 export default function TodoList() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const todoListItems = useSelector(getTodoListItems, equals);
+
+  const handleAddNewItemClick = () => {
+    setIsModalOpen(true);
+  };
+
   if (!todoListItems) {
     return <>empty list</>;
   }
+
   return (
     <>
       <ListOfItems>
@@ -24,13 +31,7 @@ export default function TodoList() {
             title={name}
           />
         ))}
-        <div
-          onClick={() => {
-            setIsModalOpen(true);
-          }}
-        >
-          New Item
-        </div>
+        <AddNewItemCard onClick={handleAddNewItemClick} />
       </ListOfItems>
       <NewTodoItemModalForm isOpen={isModalOpen} setIsOpen={setIsModalOpen} />
     </>

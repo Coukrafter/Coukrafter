@@ -1,9 +1,9 @@
-import { TodoListItem } from "src/types";
+import { TodoList } from "src/types";
 import { TodoListsActions } from "./actions";
 
 export type TodoListsState = {
   isLoading: boolean;
-  todoLists: TodoListItem[];
+  todoLists: TodoList[];
 };
 
 const initialState: TodoListsState = {

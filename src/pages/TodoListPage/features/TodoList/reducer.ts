@@ -1,9 +1,9 @@
-import { TodoListItem } from "src/types";
+import { TodoList } from "src/types";
 import { TodoListActions } from "./actions";
 
 export type TodoListState = {
   isLoading: boolean;
-  todoList: TodoListItem | null;
+  todoList: TodoList | null;
 };
 
 const initialState: TodoListState = {
@@ -28,6 +28,28 @@ export function todoListReducer(
     case "TODO_LIST_PAGE.TODO_LIST.FETCH.FAILURE": {
       return { ...state, isLoading: false };
     }
+
+    case "TODO_LIST_PAGE.TODO_LIST.SUBMIT_NEW_TASK": {
+      const { todoItem } = action.payload;
+
+      return {
+        ...state,
+        todoList: state.todoList && {
+          ...state.todoList,
+          items: [...state.todoList.items, todoItem],
+        },
+        isLoading: true,
+      };
+    }
+
+    case "TODO_LIST_PAGE.TODO_LIST.SUBMIT_NEW_TASK.SUCCESS": {
+      return { ...state, isLoading: false };
+    }
+
+    case "TODO_LIST_PAGE.TODO_LIST.SUBMIT_NEW_TASK.FAILURE": {
+      return { ...state, isLoading: false };
+    }
+
     default:
       return initialState;
   }

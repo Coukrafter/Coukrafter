@@ -5,7 +5,9 @@ export type TodoItem = {
   text: string;
 };
 
-export type TodoListItem = {
+export type NewTodoItem = Omit<TodoItem, "id">;
+
+export type TodoList = {
   id: number;
   title: string;
   items: TodoItem[];

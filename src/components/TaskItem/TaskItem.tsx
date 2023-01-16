@@ -1,3 +1,5 @@
+import { Card } from "../common";
+
 type Props = {
   title: string;
   deadline: Date;
@@ -6,14 +8,11 @@ type Props = {
 
 export default function TaskItem({ deadline, text, title }: Props) {
   return (
-    <li>
-      <div>
-        <h3>{title}</h3>
-        <p>Deadline: {deadline.toLocaleString()}</p>
-      </div>
+    <Card title={title}>
+      <p>Deadline: {deadline.toLocaleString()}</p>
       <div>
         <p>{text}</p>
       </div>
-    </li>
+    </Card>
   );
 }

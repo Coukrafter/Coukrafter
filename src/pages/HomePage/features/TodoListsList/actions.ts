@@ -1,4 +1,4 @@
-import { TodoListItem } from "src/types";
+import { TodoList } from "src/types";
 
 export type TodoListsActions =
   | TodoListsFetchAction
@@ -11,7 +11,7 @@ type TodoListsFetchAction = {
 
 type TodoListsFetchSuccessAction = {
   type: "HOME_PAGE.TODO_LISTS.FETCH.SUCCESS";
-  payload: { todoLists: TodoListItem[] };
+  payload: { todoLists: TodoList[] };
 };
 
 type TodoListsFetchFailureAction = {
@@ -23,7 +23,7 @@ export const todoListsFetch = (): TodoListsFetchAction => ({
 });
 
 export const todoListsFetchSuccess = (
-  todoLists: TodoListItem[]
+  todoLists: TodoList[]
 ): TodoListsFetchSuccessAction => ({
   type: "HOME_PAGE.TODO_LISTS.FETCH.SUCCESS",
   payload: { todoLists },

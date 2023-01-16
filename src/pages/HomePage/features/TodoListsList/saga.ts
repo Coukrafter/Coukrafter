@@ -1,10 +1,10 @@
 import { AxiosResponse } from "axios";
 import { all, call, put, takeLatest } from "redux-saga/effects";
 import { api } from "src/api";
-import { TodoListItem } from "src/types";
+import { TodoList } from "src/types";
 import { todoListsFetchFailure, todoListsFetchSuccess } from "./actions";
 
-type TodoListsFetchResponse = TodoListItem[];
+type TodoListsFetchResponse = TodoList[];
 
 const todoListsFetchApi = () =>
   api
