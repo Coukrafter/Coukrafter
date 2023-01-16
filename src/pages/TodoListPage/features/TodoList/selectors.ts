@@ -7,3 +7,6 @@ export const getTodoListItems = (state: StoreState) =>
 
 export const getTodoListTitle = (state: StoreState) =>
   pathToState(state).todoList?.title;
+
+export const getTodoListId = (state: StoreState) =>
+  pathToState(state).todoList?.id;

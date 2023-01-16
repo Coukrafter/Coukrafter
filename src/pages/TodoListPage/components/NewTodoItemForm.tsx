@@ -4,13 +4,13 @@ import { z } from "zod";
 
 import { TextInput, TextAreaInput, DateInput } from "src/components";
 import { useDispatch } from "react-redux";
-import { todoListSubmitNewTask } from "../features/TodoList/actions";
+import { todoListSubmitNewItem } from "../features/TodoList/actions";
 import { NewTodoItem } from "src/types";
 
 type Props = {};
 
 type NewTodoItemFormValues = {
-  "Task name": string;
+  "Item name": string;
   Description: string;
   Deadline: Date;
 };
@@ -18,13 +18,13 @@ type NewTodoItemFormValues = {
 export const NEW_TODO_ITEM_FORM_ID = "newTodoItemForm";
 
 const schema = z.object({
-  "Task name": z.string(),
+  "Item name": z.string(),
   Description: z.string(),
   Deadline: z.coerce.date(),
 });
 
 const transformedFormValuesToTodoItem = ({
-  ["Task name"]: name,
+  ["Item name"]: name,
   Deadline,
   Description,
 }: NewTodoItemFormValues): NewTodoItem => ({
@@ -45,13 +45,13 @@ export default function NewTodoItemForm({}: Props) {
 
   const handleFormSubmit = (data: NewTodoItemFormValues) => {
     const transformedFormValues = transformedFormValuesToTodoItem(data);
-    dispatch(todoListSubmitNewTask(transformedFormValues));
+    dispatch(todoListSubmitNewItem(transformedFormValues));
     reset();
   };
 
   return (
     <form onSubmit={handleSubmit(handleFormSubmit)} id={NEW_TODO_ITEM_FORM_ID}>
-      <TextInput label="Task name" placeholder="Title" register={register} />
+      <TextInput label="Item name" placeholder="Title" register={register} />
       <TextAreaInput
         label="Description"
         placeholder="Todo description"

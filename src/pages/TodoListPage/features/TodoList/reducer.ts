@@ -29,24 +29,23 @@ export function todoListReducer(
       return { ...state, isLoading: false };
     }
 
-    case "TODO_LIST_PAGE.TODO_LIST.SUBMIT_NEW_TASK": {
-      const { todoItem } = action.payload;
-
+    case "TODO_LIST_PAGE.TODO_LIST.SUBMIT_NEW_ITEM": {
       return {
         ...state,
-        todoList: state.todoList && {
-          ...state.todoList,
-          items: [...state.todoList.items, todoItem],
-        },
         isLoading: true,
       };
     }
 
-    case "TODO_LIST_PAGE.TODO_LIST.SUBMIT_NEW_TASK.SUCCESS": {
-      return { ...state, isLoading: false };
+    case "TODO_LIST_PAGE.TODO_LIST.SUBMIT_NEW_ITEM.SUCCESS": {
+      const { todoItems } = action.payload;
+      return {
+        ...state,
+        todoList: { ...state.todoList, items: todoItems },
+        isLoading: false,
+      };
     }
 
-    case "TODO_LIST_PAGE.TODO_LIST.SUBMIT_NEW_TASK.FAILURE": {
+    case "TODO_LIST_PAGE.TODO_LIST.SUBMIT_NEW_ITEM.FAILURE": {
       return { ...state, isLoading: false };
     }
 

@@ -25,7 +25,7 @@ export default function TodoList() {
       <ListOfItems>
         {todoListItems.map(({ id, name, deadline, text }) => (
           <TaskItem
-            key={`todoListTaskItem-${id}`}
+            key={`todoListItem-${id}`}
             deadline={deadline}
             text={text}
             title={name}

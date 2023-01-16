@@ -1,12 +1,12 @@
-import { NewTodoItem, TodoList } from "src/types";
+import { NewTodoItem, TodoItem, TodoList } from "src/types";
 
 export type TodoListActions =
   | TodoListFetchAction
   | TodoListFetchSuccessAction
   | TodoListFetchFailureAction
-  | TodoListSubmitNewTaskAction
-  | TodoListSubmitNewTaskSuccessAction
-  | TodoListSubmitNewTaskFailureAction;
+  | TodoListSubmitNewItemAction
+  | TodoListSubmitNewItemSuccessAction
+  | TodoListSubmitNewItemFailureAction;
 
 export type TodoListFetchAction = {
   type: "TODO_LIST_PAGE.TODO_LIST.FETCH";
@@ -22,17 +22,18 @@ type TodoListFetchFailureAction = {
   type: "TODO_LIST_PAGE.TODO_LIST.FETCH.FAILURE";
 };
 
-type TodoListSubmitNewTaskAction = {
-  type: "TODO_LIST_PAGE.TODO_LIST.SUBMIT_NEW_TASK";
+export type TodoListSubmitNewItemAction = {
+  type: "TODO_LIST_PAGE.TODO_LIST.SUBMIT_NEW_ITEM";
   payload: { todoItem: NewTodoItem };
 };
 
-type TodoListSubmitNewTaskSuccessAction = {
-  type: "TODO_LIST_PAGE.TODO_LIST.SUBMIT_NEW_TASK.SUCCESS";
+type TodoListSubmitNewItemSuccessAction = {
+  type: "TODO_LIST_PAGE.TODO_LIST.SUBMIT_NEW_ITEM.SUCCESS";
+  payload: { todoItems: TodoItem[] };
 };
 
-type TodoListSubmitNewTaskFailureAction = {
-  type: "TODO_LIST_PAGE.TODO_LIST.SUBMIT_NEW_TASK.FAILURE";
+type TodoListSubmitNewItemFailureAction = {
+  type: "TODO_LIST_PAGE.TODO_LIST.SUBMIT_NEW_ITEM.FAILURE";
 };
 
 export const todoListFetch = (listId: number): TodoListFetchAction => ({
@@ -51,19 +52,21 @@ export const todoListFetchFailure = (): TodoListFetchFailureAction => ({
   type: "TODO_LIST_PAGE.TODO_LIST.FETCH.FAILURE",
 });
 
-export const todoListSubmitNewTask = (
+export const todoListSubmitNewItem = (
   todoItem: NewTodoItem
-): TodoListSubmitNewTaskAction => ({
-  type: "TODO_LIST_PAGE.TODO_LIST.SUBMIT_NEW_TASK",
+): TodoListSubmitNewItemAction => ({
+  type: "TODO_LIST_PAGE.TODO_LIST.SUBMIT_NEW_ITEM",
   payload: { todoItem },
 });
 
-export const todoListSubmitNewTaskSuccess =
-  (): TodoListSubmitNewTaskSuccessAction => ({
-    type: "TODO_LIST_PAGE.TODO_LIST.SUBMIT_NEW_TASK.SUCCESS",
-  });
+export const todoListSubmitNewItemSuccess = (
+  todoItems: TodoItem[]
+): TodoListSubmitNewItemSuccessAction => ({
+  type: "TODO_LIST_PAGE.TODO_LIST.SUBMIT_NEW_ITEM.SUCCESS",
+  payload: { todoItems },
+});
 
-export const todoListSubmitNewTaskFailure =
-  (): TodoListSubmitNewTaskFailureAction => ({
-    type: "TODO_LIST_PAGE.TODO_LIST.SUBMIT_NEW_TASK.FAILURE",
+export const todoListSubmitNewItemFailure =
+  (): TodoListSubmitNewItemFailureAction => ({
+    type: "TODO_LIST_PAGE.TODO_LIST.SUBMIT_NEW_ITEM.FAILURE",
   });
