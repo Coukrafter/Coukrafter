@@ -2,7 +2,13 @@ import { AxiosResponse } from "axios";
 import { all, call, put, takeLatest } from "redux-saga/effects";
 import { api } from "src/api";
 import { TodoList } from "src/types";
-import { todoListsFetchFailure, todoListsFetchSuccess } from "./actions";
+import {
+  todoListsFetchFailure,
+  todoListsFetchSuccess,
+  todoListsSubmitNewListSuccess,
+  todoListsSubmitNewListFailure,
+  TodoListsSubmitNewListAction,
+} from "./actions";
 
 type TodoListsFetchResponse = TodoList[];
 
@@ -29,6 +35,36 @@ function* todoListRequestFetchSaga() {
   yield takeLatest("HOME_PAGE.TODO_LISTS.FETCH", todoListFetchSaga);
 }
 
+type TodoListsCreateNewListResponse = TodoList;
+
+const todoListsCreateNewListApi = (title: string) =>
+  api
+    .post<TodoListsCreateNewListResponse>("/lists", { title })
+    .then((response) => response)
+    .catch((error) => {
+      throw error;
+    });
+
+function* todoListsCreateNewListSaga({
+  payload: { listTitle },
+}: TodoListsSubmitNewListAction) {
+  try {
+    const { data: todoList }: AxiosResponse<TodoListsCreateNewListResponse> =
+      yield call(() => todoListsCreateNewListApi(listTitle));
+
+    yield put(todoListsSubmitNewListSuccess(todoList));
+  } catch (e) {
+    yield put(todoListsSubmitNewListFailure());
+  }
+}
+
+function* todoListsRequestCreateNewListSaga() {
+  yield takeLatest(
+    "HOME_PAGE.TODO_LISTS.SUBMIT_NEW_LIST",
+    todoListsCreateNewListSaga
+  );
+}
+
 export function* todoListsSaga() {
-  yield all([todoListRequestFetchSaga()]);
+  yield all([todoListRequestFetchSaga(), todoListsRequestCreateNewListSaga()]);
 }

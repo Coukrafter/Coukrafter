@@ -2,10 +2,9 @@ import { equals } from "ramda";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 
-import { TaskItem, ListOfItems } from "src/components";
+import { AddNewItemCard, TaskItem, ListOfItems } from "src/components";
 
 import { getTodoListItems } from "../features/TodoList/selectors";
-import AddNewItemCard from "./AddNewItemCard";
 import NewTodoItemModalForm from "./NewTodoItemModalForm";
 
 export default function TodoList() {
@@ -16,14 +15,10 @@ export default function TodoList() {
     setIsModalOpen(true);
   };
 
-  if (!todoListItems) {
-    return <>empty list</>;
-  }
-
   return (
     <>
       <ListOfItems>
-        {todoListItems.map(({ id, name, deadline, text }) => (
+        {todoListItems?.map(({ id, name, deadline, text }) => (
           <TaskItem
             key={`todoListItem-${id}`}
             deadline={deadline}

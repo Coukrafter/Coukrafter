@@ -28,6 +28,24 @@ export function todoListsReducer(
     case "HOME_PAGE.TODO_LISTS.FETCH.FAILURE": {
       return { ...state, isLoading: false };
     }
+
+    case "HOME_PAGE.TODO_LISTS.SUBMIT_NEW_LIST": {
+      return { ...state, isLoading: true };
+    }
+
+    case "HOME_PAGE.TODO_LISTS.SUBMIT_NEW_LIST.SUCCESS": {
+      const { todoList } = action.payload;
+      return {
+        ...state,
+        todoLists: [...state.todoLists, todoList],
+        isLoading: false,
+      };
+    }
+
+    case "HOME_PAGE.TODO_LISTS.SUBMIT_NEW_LIST.FAILURE": {
+      return { ...state, isLoading: false };
+    }
+
     default:
       return initialState;
   }

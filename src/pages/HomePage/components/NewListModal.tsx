@@ -1,25 +1,22 @@
 import { Modal } from "src/components";
-
-import NewTodoItemForm, { NEW_TODO_ITEM_FORM_ID } from "./NewTodoItemForm";
+import NewTodoListForm, { NEW_TODO_LIST_FORM_ID } from "./NewListForm";
 
 type Props = {
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export default function NewTodoItemModalForm({ isOpen, setIsOpen }: Props) {
+export default function NewListModal({ setIsOpen, isOpen }: Props) {
   const handleClose = () => {
     setIsOpen(false);
   };
-
   const handleSubmit = () => {
     setIsOpen(false);
   };
-
   return (
     <Modal
       isOpen={isOpen}
-      title="Create new Todo item"
+      title="Create new list"
       modalFooter={
         <>
           <button className="btn" type="button" onClick={handleClose}>
@@ -28,14 +25,14 @@ export default function NewTodoItemModalForm({ isOpen, setIsOpen }: Props) {
           <button
             className="btn btn-primary"
             onClick={handleSubmit}
-            form={NEW_TODO_ITEM_FORM_ID}
+            form={NEW_TODO_LIST_FORM_ID}
           >
             Submit
           </button>
         </>
       }
     >
-      <NewTodoItemForm />
+      <NewTodoListForm />
     </Modal>
   );
 }
