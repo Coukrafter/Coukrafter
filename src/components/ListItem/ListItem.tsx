@@ -8,7 +8,7 @@ export default function ListItem({
   item: { id: listId, title, items },
 }: Props) {
   return (
-    <li className="card w-60 h-60 bg-white">
+    <li className="card w-60 h-60 bg-secondary shadow-2xl">
       <a href={`/todo_list/${listId}`}>
         <div className="card-body">
           <div>

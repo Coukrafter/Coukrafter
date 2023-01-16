@@ -2,8 +2,8 @@ import "../../index.css";
 
 export default function Navbar() {
   return (
-    <header>
-      <div className="navbar bg-base-100">
+    <header className="p-2">
+      <div className="navbar bg-primary rounded-box shadow-xl">
         <div className="flex-1">
           <a className="btn btn-ghost normal-case text-xl" href="/">
             Todo
