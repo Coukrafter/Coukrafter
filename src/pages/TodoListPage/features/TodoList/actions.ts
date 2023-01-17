@@ -9,7 +9,10 @@ export type TodoListActions =
   | TodoListSubmitNewItemFailureAction
   | TodoListDeleteItemAction
   | TodoListDeleteItemSuccessAction
-  | TodoListDeleteItemFailureAction;
+  | TodoListDeleteItemFailureAction
+  | TodoListEditItemAction
+  | TodoListEditItemSuccessAction
+  | TodoListEditItemFailureAction;
 
 export type TodoListFetchAction = {
   type: "TODO_LIST_PAGE.TODO_LIST.FETCH";
@@ -51,6 +54,20 @@ type TodoListDeleteItemSuccessAction = {
 
 type TodoListDeleteItemFailureAction = {
   type: "TODO_LIST_PAGE.TODO_LIST.DELETE_ITEM.FAILURE";
+};
+
+export type TodoListEditItemAction = {
+  type: "TODO_LIST_PAGE.TODO_LIST.EDIT_ITEM";
+  payload: { todoItem: TodoItem };
+};
+
+type TodoListEditItemSuccessAction = {
+  type: "TODO_LIST_PAGE.TODO_LIST.EDIT_ITEM.SUCCESS";
+  payload: { todoItems: TodoItem[] };
+};
+
+type TodoListEditItemFailureAction = {
+  type: "TODO_LIST_PAGE.TODO_LIST.EDIT_ITEM.FAILURE";
 };
 
 export const todoListFetch = (listId: number): TodoListFetchAction => ({
@@ -104,3 +121,21 @@ export const todoListDeleteItemFailure =
   (): TodoListDeleteItemFailureAction => ({
     type: "TODO_LIST_PAGE.TODO_LIST.DELETE_ITEM.FAILURE",
   });
+
+export const todoListEditItem = (
+  todoItem: TodoItem
+): TodoListEditItemAction => ({
+  type: "TODO_LIST_PAGE.TODO_LIST.EDIT_ITEM",
+  payload: { todoItem },
+});
+
+export const todoListEditItemSuccess = (
+  todoItems: TodoItem[]
+): TodoListEditItemSuccessAction => ({
+  type: "TODO_LIST_PAGE.TODO_LIST.EDIT_ITEM.SUCCESS",
+  payload: { todoItems },
+});
+
+export const todoListEditItemFailure = (): TodoListEditItemFailureAction => ({
+  type: "TODO_LIST_PAGE.TODO_LIST.EDIT_ITEM.FAILURE",
+});

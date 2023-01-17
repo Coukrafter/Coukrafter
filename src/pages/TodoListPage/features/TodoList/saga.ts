@@ -13,23 +13,13 @@ import {
   TodoListDeleteItemAction,
   todoListDeleteItemSuccess,
   todoListDeleteItemFailure,
+  TodoListEditItemAction,
+  todoListEditItemSuccess,
+  todoListEditItemFailure,
 } from "./actions";
 import { getTodoListId, getTodoListItems } from "./selectors";
 
-type ResponseTodoItem = Omit<TodoItem, "deadline"> & { deadline: string };
-
-type TodoListFetchResponse = Omit<TodoList, "items"> & {
-  items: ResponseTodoItem[];
-};
-
-const mapTodoItemResponseToTodoItem = (
-  todoItem: ResponseTodoItem
-): TodoItem => ({ ...todoItem, deadline: new Date(todoItem.deadline) });
-
-const mapTodoListResponseToTodoList = (todoList: TodoListFetchResponse) => ({
-  ...todoList,
-  items: todoList.items.map(mapTodoItemResponseToTodoItem),
-});
+type TodoListFetchResponse = TodoList;
 
 const todoListFetchApi = (listId: number) =>
   api
@@ -45,9 +35,7 @@ function* todoListFetchSaga({ payload: { listId } }: TodoListFetchAction) {
       () => todoListFetchApi(listId)
     );
 
-    const mappedTodoList = mapTodoListResponseToTodoList(todoList);
-
-    yield put(todoListFetchSuccess(mappedTodoList));
+    yield put(todoListFetchSuccess(todoList));
   } catch (e) {
     yield put(todoListFetchFailure());
   }
@@ -78,9 +66,7 @@ function* todoListSubmitNewItemSaga({
       todoListSubmitNewItemApi(listId, [...existingItems, newTodoItemWithId])
     );
 
-    const mappedTodoItems = data.items.map(mapTodoItemResponseToTodoItem);
-
-    yield put(todoListSubmitNewItemSuccess(mappedTodoItems));
+    yield put(todoListSubmitNewItemSuccess(data.items));
   } catch (e) {
     yield put(todoListSubmitNewItemFailure());
   }
@@ -117,9 +103,7 @@ function* todoListDeleteItemSaga({
       todoListDeleteItemApi(listId, itemsWithoutDeletedItem)
     );
 
-    const mappedTodoItems = data.items.map(mapTodoItemResponseToTodoItem);
-
-    yield put(todoListDeleteItemSuccess(mappedTodoItems));
+    yield put(todoListDeleteItemSuccess(data.items));
   } catch (e) {
     yield put(todoListDeleteItemFailure());
   }
@@ -132,10 +116,45 @@ function* todoListDeleteRequestSaga() {
   );
 }
 
+const todoListEditItemApi = (listId: number, items: TodoItem[]) =>
+  api
+    // this would be delete rest method, but because of limitations of mock BE, this is workaround
+    .put<TodoListFetchResponse>(`/lists/${listId}`, { items })
+    .then((response) => response)
+    .catch((error) => {
+      throw error;
+    });
+
+function* todoListEditItemSaga({
+  payload: { todoItem },
+}: TodoListEditItemAction) {
+  try {
+    const listId: number = yield select(getTodoListId);
+    const existingItems: TodoItem[] = yield select(getTodoListItems);
+
+    const editedItems = existingItems.map((item) =>
+      todoItem.id === item.id ? todoItem : item
+    );
+
+    const { data }: AxiosResponse<TodoListFetchResponse> = yield call(() =>
+      todoListEditItemApi(listId, editedItems)
+    );
+
+    yield put(todoListEditItemSuccess(data.items));
+  } catch (e) {
+    yield put(todoListEditItemFailure());
+  }
+}
+
+function* todoListEditRequestSaga() {
+  yield takeLatest("TODO_LIST_PAGE.TODO_LIST.EDIT_ITEM", todoListEditItemSaga);
+}
+
 export function* todoListSaga() {
   yield all([
     todoListRequestFetchSaga(),
     todoListSubmitNewItemRequestSaga(),
     todoListDeleteRequestSaga(),
+    todoListEditRequestSaga(),
   ]);
 }

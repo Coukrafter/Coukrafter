@@ -1,4 +1,4 @@
-import { MouseEventHandler, ReactNode } from "react";
+import { ReactNode } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
 
@@ -7,16 +7,16 @@ import { Card } from "../common";
 type Props = {
   title: string;
   children: ReactNode;
-  onEditButtonClick?: MouseEventHandler<HTMLButtonElement>;
-  onDeleteButtonClick?: MouseEventHandler<HTMLButtonElement>;
-  onCheckboxClick?: MouseEventHandler<HTMLInputElement>;
+  onEditButtonClick?: React.MouseEventHandler<HTMLButtonElement>;
+  onDeleteButtonClick?: React.MouseEventHandler<HTMLButtonElement>;
+  onCheckboxChange?: React.ChangeEventHandler<HTMLInputElement>;
   isCheckboxChecked?: boolean;
 };
 
 export default function ItemCard({
   title,
   children,
-  onCheckboxClick,
+  onCheckboxChange,
   onDeleteButtonClick,
   onEditButtonClick,
   isCheckboxChecked,
@@ -54,12 +54,12 @@ export default function ItemCard({
               />
             </button>
           )}
-          {onCheckboxClick && (
+          {onCheckboxChange && (
             <input
               type="checkbox"
               checked={isCheckboxChecked}
               className="checkbox"
-              onClick={onCheckboxClick}
+              onChange={onCheckboxChange}
             />
           )}
         </>

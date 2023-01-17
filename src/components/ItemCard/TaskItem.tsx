@@ -1,26 +1,34 @@
-import { useDispatch } from "react-redux";
-
-import { todoListDeleteItem } from "src/pages/TodoListPage/features/TodoList/actions";
 import { TodoItem } from "src/types";
 import { parseDateAndTime } from "src/utils/dateUtils";
 import { ItemCard } from "../";
 
 type Props = {
   todoItem: TodoItem;
+  handleDelete: (id: number) => void;
+  handleEdit: (id: number) => void;
+  handleToogleCheckItem: (id: number, isChecked: boolean) => void;
 };
 
 export default function TaskItem({
   todoItem: { deadline, text, name, id },
+  handleDelete,
+  handleEdit,
+  handleToogleCheckItem,
 }: Props) {
-  const dispatch = useDispatch();
-
-  const handleDeleteButtomClick = () => {
-    dispatch(todoListDeleteItem(id));
-  };
+  const handleDeleteButtonClick = () => handleDelete(id);
+  const handleEditButtonClick = () => handleEdit(id);
+  const handleCheckboxChange = ({
+    target: { checked },
+  }: React.ChangeEvent<HTMLInputElement>) => handleToogleCheckItem(id, checked);
 
   return (
-    <ItemCard title={name} onDeleteButtonClick={handleDeleteButtomClick}>
-      <p>Deadline: {parseDateAndTime(deadline)}</p>
+    <ItemCard
+      title={name}
+      onDeleteButtonClick={handleDeleteButtonClick}
+      onEditButtonClick={handleEditButtonClick}
+      onCheckboxChange={handleCheckboxChange}
+    >
+      <p>Deadline: {parseDateAndTime(new Date(deadline))}</p>
       <div>
         <p>{text}</p>
       </div>

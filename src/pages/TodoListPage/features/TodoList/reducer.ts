@@ -18,13 +18,15 @@ export function todoListReducer(
   switch (action.type) {
     case "TODO_LIST_PAGE.TODO_LIST.FETCH":
     case "TODO_LIST_PAGE.TODO_LIST.SUBMIT_NEW_ITEM":
-    case "TODO_LIST_PAGE.TODO_LIST.DELETE_ITEM": {
+    case "TODO_LIST_PAGE.TODO_LIST.DELETE_ITEM":
+    case "TODO_LIST_PAGE.TODO_LIST.EDIT_ITEM": {
       return { ...state, isLoading: true };
     }
 
     case "TODO_LIST_PAGE.TODO_LIST.FETCH.FAILURE":
     case "TODO_LIST_PAGE.TODO_LIST.SUBMIT_NEW_ITEM.FAILURE":
-    case "TODO_LIST_PAGE.TODO_LIST.DELETE_ITEM.FAILURE": {
+    case "TODO_LIST_PAGE.TODO_LIST.DELETE_ITEM.FAILURE":
+    case "TODO_LIST_PAGE.TODO_LIST.EDIT_ITEM.FAILURE": {
       return { ...state, isLoading: false };
     }
 
@@ -34,7 +36,8 @@ export function todoListReducer(
     }
 
     case "TODO_LIST_PAGE.TODO_LIST.SUBMIT_NEW_ITEM.SUCCESS":
-    case "TODO_LIST_PAGE.TODO_LIST.DELETE_ITEM.SUCCESS": {
+    case "TODO_LIST_PAGE.TODO_LIST.DELETE_ITEM.SUCCESS":
+    case "TODO_LIST_PAGE.TODO_LIST.EDIT_ITEM.SUCCESS": {
       const { todoItems } = action.payload;
       return {
         ...state,
