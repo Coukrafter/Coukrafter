@@ -2,6 +2,7 @@ import { AxiosResponse } from "axios";
 import { all, call, put, select, takeLatest } from "redux-saga/effects";
 import { api } from "src/api";
 import { NewTodoItem, TodoItem, TodoList } from "src/types";
+import { getNewId } from "src/utils/utils";
 import {
   todoListFetchFailure,
   todoListFetchSuccess,
@@ -9,10 +10,26 @@ import {
   TodoListSubmitNewItemAction,
   todoListSubmitNewItemSuccess,
   todoListSubmitNewItemFailure,
+  TodoListDeleteItemAction,
+  todoListDeleteItemSuccess,
+  todoListDeleteItemFailure,
 } from "./actions";
 import { getTodoListId, getTodoListItems } from "./selectors";
 
-type TodoListFetchResponse = TodoList;
+type ResponseTodoItem = Omit<TodoItem, "deadline"> & { deadline: string };
+
+type TodoListFetchResponse = Omit<TodoList, "items"> & {
+  items: ResponseTodoItem[];
+};
+
+const mapTodoItemResponseToTodoItem = (
+  todoItem: ResponseTodoItem
+): TodoItem => ({ ...todoItem, deadline: new Date(todoItem.deadline) });
+
+const mapTodoListResponseToTodoList = (todoList: TodoListFetchResponse) => ({
+  ...todoList,
+  items: todoList.items.map(mapTodoItemResponseToTodoItem),
+});
 
 const todoListFetchApi = (listId: number) =>
   api
@@ -28,7 +45,9 @@ function* todoListFetchSaga({ payload: { listId } }: TodoListFetchAction) {
       () => todoListFetchApi(listId)
     );
 
-    yield put(todoListFetchSuccess(todoList));
+    const mappedTodoList = mapTodoListResponseToTodoList(todoList);
+
+    yield put(todoListFetchSuccess(mappedTodoList));
   } catch (e) {
     yield put(todoListFetchFailure());
   }
@@ -38,10 +57,7 @@ function* todoListRequestFetchSaga() {
   yield takeLatest("TODO_LIST_PAGE.TODO_LIST.FETCH", todoListFetchSaga);
 }
 
-const todoListSubmitNewItemApi = (
-  listId: number,
-  items: (NewTodoItem | TodoItem)[]
-) =>
+const todoListSubmitNewItemApi = (listId: number, items: TodoItem[]) =>
   api
     .put<TodoListFetchResponse>(`/lists/${listId}`, { items })
     .then((response) => response)
@@ -56,11 +72,15 @@ function* todoListSubmitNewItemSaga({
     const listId: number = yield select(getTodoListId);
     const existingItems: TodoItem[] = yield select(getTodoListItems);
 
+    const newTodoItemWithId = { ...todoItem, id: getNewId() };
+
     const { data }: AxiosResponse<TodoListFetchResponse> = yield call(() =>
-      todoListSubmitNewItemApi(listId, [...existingItems, todoItem])
+      todoListSubmitNewItemApi(listId, [...existingItems, newTodoItemWithId])
     );
 
-    yield put(todoListSubmitNewItemSuccess(data.items));
+    const mappedTodoItems = data.items.map(mapTodoItemResponseToTodoItem);
+
+    yield put(todoListSubmitNewItemSuccess(mappedTodoItems));
   } catch (e) {
     yield put(todoListSubmitNewItemFailure());
   }
@@ -73,6 +93,49 @@ function* todoListSubmitNewItemRequestSaga() {
   );
 }
 
+const todoListDeleteItemApi = (listId: number, items: TodoItem[]) =>
+  api
+    // this would be delete rest method, but because of limitations of mock BE, this is workaround
+    .put<TodoListFetchResponse>(`/lists/${listId}`, { items })
+    .then((response) => response)
+    .catch((error) => {
+      throw error;
+    });
+
+function* todoListDeleteItemSaga({
+  payload: { id: deletedItemId },
+}: TodoListDeleteItemAction) {
+  try {
+    const listId: number = yield select(getTodoListId);
+    const existingItems: TodoItem[] = yield select(getTodoListItems);
+
+    const itemsWithoutDeletedItem = existingItems.filter(
+      ({ id }) => id !== deletedItemId
+    );
+
+    const { data }: AxiosResponse<TodoListFetchResponse> = yield call(() =>
+      todoListDeleteItemApi(listId, itemsWithoutDeletedItem)
+    );
+
+    const mappedTodoItems = data.items.map(mapTodoItemResponseToTodoItem);
+
+    yield put(todoListDeleteItemSuccess(mappedTodoItems));
+  } catch (e) {
+    yield put(todoListDeleteItemFailure());
+  }
+}
+
+function* todoListDeleteRequestSaga() {
+  yield takeLatest(
+    "TODO_LIST_PAGE.TODO_LIST.DELETE_ITEM",
+    todoListDeleteItemSaga
+  );
+}
+
 export function* todoListSaga() {
-  yield all([todoListRequestFetchSaga(), todoListSubmitNewItemRequestSaga()]);
+  yield all([
+    todoListRequestFetchSaga(),
+    todoListSubmitNewItemRequestSaga(),
+    todoListDeleteRequestSaga(),
+  ]);
 }

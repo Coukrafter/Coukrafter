@@ -16,8 +16,16 @@ export function todoListReducer(
   action: TodoListActions
 ) {
   switch (action.type) {
-    case "TODO_LIST_PAGE.TODO_LIST.FETCH": {
+    case "TODO_LIST_PAGE.TODO_LIST.FETCH":
+    case "TODO_LIST_PAGE.TODO_LIST.SUBMIT_NEW_ITEM":
+    case "TODO_LIST_PAGE.TODO_LIST.DELETE_ITEM": {
       return { ...state, isLoading: true };
+    }
+
+    case "TODO_LIST_PAGE.TODO_LIST.FETCH.FAILURE":
+    case "TODO_LIST_PAGE.TODO_LIST.SUBMIT_NEW_ITEM.FAILURE":
+    case "TODO_LIST_PAGE.TODO_LIST.DELETE_ITEM.FAILURE": {
+      return { ...state, isLoading: false };
     }
 
     case "TODO_LIST_PAGE.TODO_LIST.FETCH.SUCCESS": {
@@ -25,28 +33,14 @@ export function todoListReducer(
       return { ...state, isLoading: false, todoList };
     }
 
-    case "TODO_LIST_PAGE.TODO_LIST.FETCH.FAILURE": {
-      return { ...state, isLoading: false };
-    }
-
-    case "TODO_LIST_PAGE.TODO_LIST.SUBMIT_NEW_ITEM": {
-      return {
-        ...state,
-        isLoading: true,
-      };
-    }
-
-    case "TODO_LIST_PAGE.TODO_LIST.SUBMIT_NEW_ITEM.SUCCESS": {
+    case "TODO_LIST_PAGE.TODO_LIST.SUBMIT_NEW_ITEM.SUCCESS":
+    case "TODO_LIST_PAGE.TODO_LIST.DELETE_ITEM.SUCCESS": {
       const { todoItems } = action.payload;
       return {
         ...state,
         todoList: { ...state.todoList, items: todoItems },
         isLoading: false,
       };
-    }
-
-    case "TODO_LIST_PAGE.TODO_LIST.SUBMIT_NEW_ITEM.FAILURE": {
-      return { ...state, isLoading: false };
     }
 
     default:

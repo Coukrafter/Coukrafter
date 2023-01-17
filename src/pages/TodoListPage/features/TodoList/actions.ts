@@ -6,7 +6,10 @@ export type TodoListActions =
   | TodoListFetchFailureAction
   | TodoListSubmitNewItemAction
   | TodoListSubmitNewItemSuccessAction
-  | TodoListSubmitNewItemFailureAction;
+  | TodoListSubmitNewItemFailureAction
+  | TodoListDeleteItemAction
+  | TodoListDeleteItemSuccessAction
+  | TodoListDeleteItemFailureAction;
 
 export type TodoListFetchAction = {
   type: "TODO_LIST_PAGE.TODO_LIST.FETCH";
@@ -34,6 +37,20 @@ type TodoListSubmitNewItemSuccessAction = {
 
 type TodoListSubmitNewItemFailureAction = {
   type: "TODO_LIST_PAGE.TODO_LIST.SUBMIT_NEW_ITEM.FAILURE";
+};
+
+export type TodoListDeleteItemAction = {
+  type: "TODO_LIST_PAGE.TODO_LIST.DELETE_ITEM";
+  payload: { id: number };
+};
+
+type TodoListDeleteItemSuccessAction = {
+  type: "TODO_LIST_PAGE.TODO_LIST.DELETE_ITEM.SUCCESS";
+  payload: { todoItems: TodoItem[] };
+};
+
+type TodoListDeleteItemFailureAction = {
+  type: "TODO_LIST_PAGE.TODO_LIST.DELETE_ITEM.FAILURE";
 };
 
 export const todoListFetch = (listId: number): TodoListFetchAction => ({
@@ -69,4 +86,21 @@ export const todoListSubmitNewItemSuccess = (
 export const todoListSubmitNewItemFailure =
   (): TodoListSubmitNewItemFailureAction => ({
     type: "TODO_LIST_PAGE.TODO_LIST.SUBMIT_NEW_ITEM.FAILURE",
+  });
+
+export const todoListDeleteItem = (id: number): TodoListDeleteItemAction => ({
+  type: "TODO_LIST_PAGE.TODO_LIST.DELETE_ITEM",
+  payload: { id },
+});
+
+export const todoListDeleteItemSuccess = (
+  todoItems: TodoItem[]
+): TodoListDeleteItemSuccessAction => ({
+  type: "TODO_LIST_PAGE.TODO_LIST.DELETE_ITEM.SUCCESS",
+  payload: { todoItems },
+});
+
+export const todoListDeleteItemFailure =
+  (): TodoListDeleteItemFailureAction => ({
+    type: "TODO_LIST_PAGE.TODO_LIST.DELETE_ITEM.FAILURE",
   });

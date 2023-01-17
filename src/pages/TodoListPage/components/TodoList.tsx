@@ -18,13 +18,8 @@ export default function TodoList() {
   return (
     <>
       <ListOfItems>
-        {todoListItems?.map(({ id, name, deadline, text }) => (
-          <TaskItem
-            key={`todoListItem-${id}`}
-            deadline={deadline}
-            text={text}
-            title={name}
-          />
+        {todoListItems?.map((todoItem) => (
+          <TaskItem key={`todoListItem-${todoItem.id}`} todoItem={todoItem} />
         ))}
         <AddNewItemCard onClick={handleAddNewItemClick} />
       </ListOfItems>
