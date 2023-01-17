@@ -1,5 +1,5 @@
 import { TodoItem } from "src/types";
-import { parseDateAndTime } from "src/utils/dateUtils";
+import { parseDate } from "src/utils/dateUtils";
 import { ItemCard } from "../";
 
 type Props = {
@@ -10,7 +10,7 @@ type Props = {
 };
 
 export default function TaskItem({
-  todoItem: { deadline, text, name, id },
+  todoItem: { deadline, text, name, id, isChecked },
   handleDelete,
   handleEdit,
   handleToogleCheckItem,
@@ -27,10 +27,13 @@ export default function TaskItem({
       onDeleteButtonClick={handleDeleteButtonClick}
       onEditButtonClick={handleEditButtonClick}
       onCheckboxChange={handleCheckboxChange}
+      isCheckboxChecked={isChecked}
     >
-      <p>Deadline: {parseDateAndTime(new Date(deadline))}</p>
-      <div>
-        <p>{text}</p>
+      <div className="h-1/2">
+        <p className="break-words h-4/5 overflow-hidden">{text}</p>
+        <p className="flex-none h-1/5">
+          Deadline: {parseDate(new Date(deadline))}
+        </p>
       </div>
     </ItemCard>
   );

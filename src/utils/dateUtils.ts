@@ -1,1 +1,1 @@
-export const parseDateAndTime = (date: Date) => date.toLocaleString("sk-SK");
+export const parseDate = (date: Date) => date.toLocaleDateString("sk-SK");

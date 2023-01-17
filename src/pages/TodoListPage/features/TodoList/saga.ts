@@ -60,7 +60,7 @@ function* todoListSubmitNewItemSaga({
     const listId: number = yield select(getTodoListId);
     const existingItems: TodoItem[] = yield select(getTodoListItems);
 
-    const newTodoItemWithId = { ...todoItem, id: getNewId() };
+    const newTodoItemWithId = { ...todoItem, id: getNewId(), isChecked: false };
 
     const { data }: AxiosResponse<TodoListFetchResponse> = yield call(() =>
       todoListSubmitNewItemApi(listId, [...existingItems, newTodoItemWithId])

@@ -3,9 +3,10 @@ export type TodoItem = {
   name: string;
   deadline: string;
   text: string;
+  isChecked: boolean;
 };
 
-export type NewTodoItem = Omit<TodoItem, "id">;
+export type NewTodoItem = Omit<TodoItem, "id" | "isChecked">;
 
 export type TodoList = {
   id: number;

@@ -19,7 +19,7 @@ type Props = {
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   mode: TodoItemFormMode;
-  defaultValues?: Partial<TodoItem>;
+  defaultValues?: TodoItem;
 };
 
 const mapModeToTitle: Record<TodoItemFormMode, string> = {
@@ -41,17 +41,23 @@ const schema = z.object({
   deadline: z.coerce.date(),
 });
 
-const emptyForm: TodoItemFormValues = {
+const emptyFormValues: TodoItemFormValues = {
   deadline: "",
   name: "",
   text: "",
 };
 
+const mapTodoItemToFormValues = ({
+  deadline,
+  name,
+  text,
+}: TodoItem): TodoItemFormValues => ({ deadline, name, text });
+
 export default function TodoItemModalForm({
   isOpen,
   setIsOpen,
   mode,
-  defaultValues = emptyForm,
+  defaultValues,
 }: Props) {
   const dispatch = useDispatch();
   const {
@@ -66,7 +72,9 @@ export default function TodoItemModalForm({
 
   useEffect(
     function resetFormOnOpen() {
-      reset(defaultValues);
+      reset(
+        defaultValues ? mapTodoItemToFormValues(defaultValues) : emptyFormValues
+      );
     },
     [isOpen]
   );
@@ -78,8 +86,8 @@ export default function TodoItemModalForm({
         break;
       }
       case "editing": {
-        defaultValues?.id &&
-          dispatch(todoListEditItem({ ...data, id: defaultValues.id }));
+        defaultValues &&
+          dispatch(todoListEditItem({ ...defaultValues, ...data }));
         break;
       }
     }
