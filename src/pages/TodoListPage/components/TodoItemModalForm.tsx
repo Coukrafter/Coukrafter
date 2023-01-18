@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { useForm, useFormState } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -14,6 +14,7 @@ import { TodoItemFormMode } from "../types";
 
 import TodoItemFormFields from "./TodoItemFormFields";
 import { useEffect } from "react";
+import { parseDateStringToInputValue } from "src/utils/dateUtils";
 
 type Props = {
   isOpen: boolean;
@@ -36,7 +37,9 @@ export type TodoItemFormValues = {
 const TODO_ITEM_FORM_ID = "newTodoItemForm";
 
 const schema = z.object({
-  name: z.string(),
+  name: z.string().min(1, {
+    message: "Name is required",
+  }),
   text: z.string(),
   deadline: z.coerce.date(),
 });
@@ -51,7 +54,11 @@ const mapTodoItemToFormValues = ({
   deadline,
   name,
   text,
-}: TodoItem): TodoItemFormValues => ({ deadline, name, text });
+}: TodoItem): TodoItemFormValues => ({
+  deadline: parseDateStringToInputValue(deadline),
+  name,
+  text,
+});
 
 export default function TodoItemModalForm({
   isOpen,
@@ -61,14 +68,15 @@ export default function TodoItemModalForm({
 }: Props) {
   const dispatch = useDispatch();
   const {
+    control,
     register,
     handleSubmit,
-    watch,
     formState: { errors },
     reset,
   } = useForm<TodoItemFormValues>({
     resolver: zodResolver(schema),
   });
+  const { isDirty } = useFormState({ control });
 
   useEffect(
     function resetFormOnOpen() {
@@ -98,6 +106,10 @@ export default function TodoItemModalForm({
     setIsOpen(false);
   };
 
+  const hasErrors = Object.keys(errors).length !== 0;
+
+  const isSubmitDisabled = !isDirty || hasErrors;
+
   return (
     <Modal
       isOpen={isOpen}
@@ -111,14 +123,18 @@ export default function TodoItemModalForm({
           >
             Close
           </button>
-          <button className="btn btn-primary" form={TODO_ITEM_FORM_ID}>
+          <button
+            className="btn btn-primary"
+            form={TODO_ITEM_FORM_ID}
+            disabled={isSubmitDisabled}
+          >
             Submit
           </button>
         </>
       }
     >
       <form onSubmit={handleSubmit(handleFormSubmit)} id={TODO_ITEM_FORM_ID}>
-        <TodoItemFormFields register={register} />
+        <TodoItemFormFields register={register} errors={errors} />
       </form>
     </Modal>
   );

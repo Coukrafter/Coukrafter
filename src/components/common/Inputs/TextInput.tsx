@@ -6,6 +6,7 @@ type Props<T extends FieldValues> = {
   register: UseFormRegister<T>;
   placeholder: string;
   inputId: Path<T>;
+  errorMessage?: string;
 };
 
 export default function TextInput<T extends FieldValues>({
@@ -13,13 +14,16 @@ export default function TextInput<T extends FieldValues>({
   register,
   placeholder,
   inputId,
+  errorMessage,
 }: Props<T>) {
   return (
-    <InputWrapper label={label} inputId={inputId}>
+    <InputWrapper label={label} inputId={inputId} errorMessage={errorMessage}>
       <input
         type="text"
         placeholder={placeholder}
-        className="input input-bordered w-full max-w-xs"
+        className={`input input-bordered w-full ${
+          errorMessage ? "input-error" : ""
+        }`}
         {...register(inputId)}
       />
     </InputWrapper>

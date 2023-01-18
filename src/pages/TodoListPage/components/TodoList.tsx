@@ -50,8 +50,6 @@ export default function TodoList() {
       filter(filterByProgress(selectedProgress))
     )(todoListItems) as TodoItem[]);
 
-  console.log(selectedProgress);
-
   const handleAddNewItemClick = () => {
     setIsModalOpen(true);
     setModalFormMode("creating");

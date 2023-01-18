@@ -18,7 +18,6 @@ export default function ProgressSlider() {
     target: { value },
   }: React.ChangeEvent<HTMLInputElement>) => {
     const selectedProgress = mapValueToSelectedProgress[value as InputValues];
-    console.log(selectedProgress);
     dispatch(filterSelectedProgressChange(selectedProgress));
   };
 
