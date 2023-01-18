@@ -10,7 +10,7 @@ export default function ListItem({
   item: { id: listId, title, items },
 }: Props) {
   return (
-    <a href={`/todo_list/${listId}`}>
+    <a href={`/todo-app/todo_list/${listId}`}>
       <Card title={title} header={<p>{items.length}</p>}>
         <div>
           {items.slice(0, 5).map(({ name, id: itemId }) => (

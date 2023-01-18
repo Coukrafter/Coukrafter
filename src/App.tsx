@@ -13,8 +13,11 @@ export default function App() {
         <Layout>
           <Routes>
             <Route path="/todo-app" element={<HomePage />} />
-            <Route path="todo_list/:listId" element={<TodoListPage />} />
-            <Route path="deleted" element={<DeletedPage />} />
+            <Route
+              path="/todo-app/todo_list/:listId"
+              element={<TodoListPage />}
+            />
+            <Route path="/todo-app/deleted" element={<DeletedPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </Layout>
