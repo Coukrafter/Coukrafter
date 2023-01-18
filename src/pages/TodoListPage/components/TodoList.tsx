@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { AddNewItemCard, TaskItem, ListOfItems } from "src/components";
-import { TodoItem } from "src/types";
+import { TodoItem } from "src/types/generalTypes";
 import {
   getSearchedValue,
   getSelectedProgress,

@@ -1,4 +1,4 @@
-import { TodoList } from "src/types";
+import { TodoList } from "src/types/generalTypes";
 import { TodoListsActions } from "./actions";
 
 export type TodoListsState = {

@@ -1,4 +1,4 @@
-import { NewTodoItem, TodoItem, TodoList } from "src/types";
+import { NewTodoItem, TodoItem, TodoList } from "src/types/generalTypes";
 
 export type TodoListActions =
   | TodoListFetchAction

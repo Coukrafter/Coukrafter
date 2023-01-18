@@ -1,7 +1,11 @@
 import { AxiosResponse } from "axios";
 import { all, call, put, takeLatest } from "redux-saga/effects";
 import { api } from "src/api";
-import { TodoList } from "src/types";
+import {
+  TodoListsCreateNewListResponse,
+  TodoListsFetchResponse,
+} from "src/types";
+import { TodoList } from "src/types/generalTypes";
 import {
   todoListsFetchFailure,
   todoListsFetchSuccess,
@@ -9,8 +13,6 @@ import {
   todoListsSubmitNewListFailure,
   TodoListsSubmitNewListAction,
 } from "./actions";
-
-type TodoListsFetchResponse = TodoList[];
 
 const todoListsFetchApi = () =>
   api
@@ -34,8 +36,6 @@ function* todoListFetchSaga() {
 function* todoListRequestFetchSaga() {
   yield takeLatest("HOME_PAGE.TODO_LISTS.FETCH", todoListFetchSaga);
 }
-
-type TodoListsCreateNewListResponse = TodoList;
 
 const todoListsCreateNewListApi = (title: string) =>
   api

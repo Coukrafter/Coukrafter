@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
 import { Modal } from "src/components";
-import { TodoItem } from "src/types";
+import { TodoItem } from "src/types/generalTypes";
 
 import {
   todoListEditItem,

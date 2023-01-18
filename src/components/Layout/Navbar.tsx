@@ -16,9 +16,6 @@ export default function Navbar() {
                 <a href="/">Home</a>
               </li>
               <li>
-                <a href="/todo_list/1">Todo List</a>
-              </li>
-              <li>
                 <a href="/deleted">Deleted</a>
               </li>
             </ul>
