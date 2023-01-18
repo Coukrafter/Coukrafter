@@ -12,6 +12,7 @@ export default function ItemInfoModal({ isOpen, todoItem, onClose }: Props) {
   if (!isOpen || !todoItem) return null;
 
   const { name, deadline, text } = todoItem;
+
   return (
     <Modal
       title={name}

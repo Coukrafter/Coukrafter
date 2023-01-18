@@ -2,7 +2,12 @@ import { AxiosResponse } from "axios";
 import { all, call, put, select, takeLatest } from "redux-saga/effects";
 import { api } from "src/api";
 import { TodoListFetchResponse } from "src/types";
-import { NewTodoItem, TodoItem, TodoList } from "src/types/generalTypes";
+import {
+  DeletedTodoItem,
+  NewTodoItem,
+  TodoItem,
+  TodoList,
+} from "src/types/generalTypes";
 import { getNewId } from "src/utils/utils";
 import {
   todoListFetchFailure,
@@ -87,12 +92,23 @@ const todoListDeleteItemApi = (listId: number, items: TodoItem[]) =>
       throw error;
     });
 
+const todoListAddItemToDeletedItemsApi = (deletedItem: DeletedTodoItem) =>
+  api
+    // this would be handeled by BE, but I want to have it working anyway...
+    .post<TodoListFetchResponse>(`/deletedItems`, deletedItem)
+    .then((response) => response)
+    .catch((error) => {
+      throw error;
+    });
+
 function* todoListDeleteItemSaga({
   payload: { id: deletedItemId },
 }: TodoListDeleteItemAction) {
   try {
     const listId: number = yield select(getTodoListId);
     const existingItems: TodoItem[] = yield select(getTodoListItems);
+
+    const itemToDelete = existingItems.find(({ id }) => deletedItemId === id);
 
     const itemsWithoutDeletedItem = existingItems.filter(
       ({ id }) => id !== deletedItemId
@@ -101,6 +117,15 @@ function* todoListDeleteItemSaga({
     const { data }: AxiosResponse<TodoListFetchResponse> = yield call(() =>
       todoListDeleteItemApi(listId, itemsWithoutDeletedItem)
     );
+
+    if (itemToDelete) {
+      const deletedItem: DeletedTodoItem = {
+        id: deletedItemId,
+        name: itemToDelete.name,
+        text: itemToDelete.text,
+      };
+      yield call(() => todoListAddItemToDeletedItemsApi(deletedItem));
+    }
 
     yield put(todoListDeleteItemSuccess(data.items));
   } catch (e) {
