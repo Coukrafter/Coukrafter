@@ -41,7 +41,7 @@ export function todoListReducer(
       const { todoItems } = action.payload;
       return {
         ...state,
-        todoList: { ...state.todoList, items: todoItems },
+        todoList: state.todoList && { ...state.todoList, items: todoItems },
         isLoading: false,
       };
     }
