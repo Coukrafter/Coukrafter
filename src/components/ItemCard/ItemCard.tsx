@@ -68,10 +68,8 @@ export default function ItemCard({
               type="checkbox"
               checked={isCheckboxChecked}
               className="checkbox"
-              onChange={(e) => {
-                e.stopPropagation();
-                onCheckboxChange(e);
-              }}
+              onClick={(e) => e.stopPropagation()}
+              onChange={onCheckboxChange}
             />
           )}
         </>

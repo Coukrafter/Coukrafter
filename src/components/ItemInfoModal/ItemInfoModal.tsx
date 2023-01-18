@@ -20,7 +20,7 @@ export default function ItemInfoModal({ isOpen, todoItem, onClose }: Props) {
       modalFooter={
         <div className="w-full flex justify-between">
           {deadline && <p>Deadline: {parseDate(new Date(deadline))}</p>}
-          <button className="btn" type="button" onClick={onClose}>
+          <button className="btn ml-auto" type="button" onClick={onClose}>
             Close
           </button>
         </div>
