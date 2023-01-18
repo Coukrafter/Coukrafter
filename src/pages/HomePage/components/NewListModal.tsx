@@ -13,9 +13,10 @@ export default function NewListModal({ setIsOpen, isOpen }: Props) {
   const handleSubmit = () => {
     setIsOpen(false);
   };
+  if (!isOpen) return null;
+
   return (
     <Modal
-      isOpen={isOpen}
       title="Create new list"
       modalFooter={
         <>

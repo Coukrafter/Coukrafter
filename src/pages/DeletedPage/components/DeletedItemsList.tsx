@@ -1,12 +1,33 @@
+import { useState } from "react";
 import { useQuery } from "react-query";
-import { ListOfItems, TaskItem } from "src/components";
+import { ListOfItems } from "src/components";
+import DeletedItem from "src/components/ItemCard/DeletedItem";
+import ItemInfoModal from "src/components/ItemInfoModal/ItemInfoModal";
 import { fetchDeletedItems } from "../api/deletedItemsApi";
 
 export default function DeletedItemsList() {
-  const { isLoading, isError, isSuccess, data } = useQuery(
-    "deletedItems",
-    fetchDeletedItems
-  );
+  const [isItemInfoModalOpen, setIsItemInfoModalOpen] = useState(false);
+  const [currentlyOpenedItemId, setCurrentlyOpenedItemId] = useState<
+    number | null
+  >(null);
+
+  const {
+    isLoading,
+    isError,
+    isSuccess,
+    data: items,
+  } = useQuery("deletedItems", fetchDeletedItems);
+
+  const handleItemClick = (id: number) => {
+    setIsItemInfoModalOpen(true);
+    setCurrentlyOpenedItemId(id);
+  };
+
+  const handleModalClose = () => {
+    setIsItemInfoModalOpen(false);
+    setCurrentlyOpenedItemId(null);
+  };
+
   if (isLoading) {
     return <></>;
   }
@@ -14,10 +35,21 @@ export default function DeletedItemsList() {
     return <></>;
   }
   return (
-    <ListOfItems>
-      {data.map((todoItem) => (
-        <TaskItem todoItem={todoItem} />
-      ))}
-    </ListOfItems>
+    <>
+      <ListOfItems>
+        {items.map((todoItem) => (
+          <DeletedItem
+            key={`deletedTodoItem-${todoItem.id}`}
+            todoItem={todoItem}
+            onItemClick={handleItemClick}
+          />
+        ))}
+      </ListOfItems>
+      <ItemInfoModal
+        isOpen={isItemInfoModalOpen}
+        todoItem={items.find((item) => currentlyOpenedItemId === item.id)}
+        onClose={handleModalClose}
+      />
+    </>
   );
 }

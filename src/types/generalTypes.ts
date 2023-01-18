@@ -13,3 +13,5 @@ export type TodoList = {
   title: string;
   items: TodoItem[];
 };
+
+export type DeletedTodoItem = Omit<TodoItem, "deadline" | "isChecked">;

@@ -110,9 +110,10 @@ export default function TodoItemModalForm({
 
   const isSubmitDisabled = !isDirty || hasErrors;
 
+  if (!isOpen) return null;
+
   return (
     <Modal
-      isOpen={isOpen}
       title={mapModeToTitle[mode]}
       modalFooter={
         <>

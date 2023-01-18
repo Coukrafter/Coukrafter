@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { AddNewItemCard, TaskItem, ListOfItems } from "src/components";
+import ItemInfoModal from "src/components/ItemInfoModal/ItemInfoModal";
 import { TodoItem } from "src/types/generalTypes";
 import {
   getSearchedValue,
@@ -32,11 +33,25 @@ const filterByProgress = curry(
 );
 
 export default function TodoList() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isItemModalFormOpen, setIsItemModalFormOpen] = useState(false);
   const [modalFormMode, setModalFormMode] =
     useState<TodoItemFormMode>("creating");
   const [todoItemFormDefaultValues, setTodoItemFormDefaultValues] =
     useState<TodoItem>();
+  const [isItemInfoModalOpen, setIsItemInfoModalOpen] = useState(false);
+  const [currentlyOpenedItemId, setCurrentlyOpenedItemId] = useState<
+    number | null
+  >(null);
+
+  const handleItemClick = (id: number) => {
+    setIsItemInfoModalOpen(true);
+    setCurrentlyOpenedItemId(id);
+  };
+
+  const handleModalClose = () => {
+    setIsItemInfoModalOpen(false);
+    setCurrentlyOpenedItemId(null);
+  };
 
   const dispatch = useDispatch();
   const todoListItems = useSelector(getTodoListItems, equals);
@@ -51,7 +66,7 @@ export default function TodoList() {
     )(todoListItems) as TodoItem[]);
 
   const handleAddNewItemClick = () => {
-    setIsModalOpen(true);
+    setIsItemModalFormOpen(true);
     setModalFormMode("creating");
     setTodoItemFormDefaultValues(undefined);
   };
@@ -61,7 +76,7 @@ export default function TodoList() {
   };
 
   const handleEditItem = (id: number) => {
-    setIsModalOpen(true);
+    setIsItemModalFormOpen(true);
     setModalFormMode("editing");
     setTodoItemFormDefaultValues(filteredItems?.find((item) => id === item.id));
   };
@@ -81,15 +96,23 @@ export default function TodoList() {
             handleDelete={handleDeleteItem}
             handleEdit={handleEditItem}
             handleToogleCheckItem={handleToogleCheckItem}
+            onItemClick={handleItemClick}
           />
         ))}
         <AddNewItemCard onClick={handleAddNewItemClick} />
       </ListOfItems>
       <TodoItemModalForm
-        isOpen={isModalOpen}
-        setIsOpen={setIsModalOpen}
+        isOpen={isItemModalFormOpen}
+        setIsOpen={setIsItemModalFormOpen}
         mode={modalFormMode}
         defaultValues={todoItemFormDefaultValues}
+      />
+      <ItemInfoModal
+        isOpen={isItemInfoModalOpen}
+        todoItem={filteredItems?.find(
+          (item) => currentlyOpenedItemId === item.id
+        )}
+        onClose={handleModalClose}
       />
     </div>
   );

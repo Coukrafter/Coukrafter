@@ -10,9 +10,9 @@ export default function ListItem({
 }: Props) {
   return (
     <a href={`/todo_list/${listId}`}>
-      <Card title={title}>
+      <Card title={title} header={<p>{items.length}</p>}>
         <div>
-          {items.map(({ name, id: itemId }) => (
+          {items.slice(0, 5).map(({ name, id: itemId }) => (
             <p key={`todoLists-${listId}-item-${itemId}`}>{name}</p>
           ))}
         </div>

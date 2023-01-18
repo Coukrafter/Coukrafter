@@ -3,10 +3,11 @@ import { parseDate } from "src/utils/dateUtils";
 import { ItemCard } from "../";
 
 type Props = {
-  todoItem: Pick<TodoItem, "id" | "name"> & Partial<TodoItem>;
+  todoItem: TodoItem;
   handleDelete?: (id: number) => void;
   handleEdit?: (id: number) => void;
   handleToogleCheckItem?: (id: number, isChecked: boolean) => void;
+  onItemClick?: (id: number) => void;
 };
 
 export default function TaskItem({
@@ -14,6 +15,7 @@ export default function TaskItem({
   handleDelete,
   handleEdit,
   handleToogleCheckItem,
+  onItemClick,
 }: Props) {
   const handleDeleteButtonClick = handleDelete && (() => handleDelete(id));
   const handleEditButtonClick = handleEdit && (() => handleEdit(id));
@@ -22,21 +24,24 @@ export default function TaskItem({
     (({ target: { checked } }: React.ChangeEvent<HTMLInputElement>) =>
       handleToogleCheckItem(id, checked));
 
+  const handleCardClick = () => {
+    onItemClick?.(id);
+  };
+
   return (
     <ItemCard
       title={name}
+      isCheckboxChecked={isChecked}
       onDeleteButtonClick={handleDeleteButtonClick}
       onEditButtonClick={handleEditButtonClick}
       onCheckboxChange={handleCheckboxChange}
-      isCheckboxChecked={isChecked}
+      onCardClick={handleCardClick}
     >
       <div className="h-1/2">
         <p className="break-words h-4/5 overflow-hidden">{text}</p>
-        {deadline && (
-          <p className="flex-none h-1/5">
-            Deadline: {parseDate(new Date(deadline))}
-          </p>
-        )}
+        <p className="flex-none h-1/5">
+          Deadline: {parseDate(new Date(deadline))}
+        </p>
       </div>
     </ItemCard>
   );

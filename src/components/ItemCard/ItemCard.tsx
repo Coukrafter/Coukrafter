@@ -11,6 +11,7 @@ type Props = {
   onDeleteButtonClick?: React.MouseEventHandler<HTMLButtonElement>;
   onCheckboxChange?: React.ChangeEventHandler<HTMLInputElement>;
   isCheckboxChecked?: boolean;
+  onCardClick?: React.MouseEventHandler<HTMLLIElement>;
 };
 
 export default function ItemCard({
@@ -20,17 +21,22 @@ export default function ItemCard({
   onDeleteButtonClick,
   onEditButtonClick,
   isCheckboxChecked,
+  onCardClick,
 }: Props) {
   return (
     <Card
       title={title}
-      headerControls={
+      onClick={onCardClick}
+      header={
         <>
           {onEditButtonClick && (
             <button
               className="btn btn-xs btn-square"
               type="button"
-              onClick={onEditButtonClick}
+              onClick={(e) => {
+                e.stopPropagation();
+                onEditButtonClick(e);
+              }}
             >
               <FontAwesomeIcon
                 icon={faPencil}
@@ -44,7 +50,10 @@ export default function ItemCard({
             <button
               className="btn btn-xs btn-square"
               type="button"
-              onClick={onDeleteButtonClick}
+              onClick={(e) => {
+                e.stopPropagation();
+                onDeleteButtonClick(e);
+              }}
             >
               <FontAwesomeIcon
                 icon={faTrash}
@@ -59,7 +68,10 @@ export default function ItemCard({
               type="checkbox"
               checked={isCheckboxChecked}
               className="checkbox"
-              onChange={onCheckboxChange}
+              onChange={(e) => {
+                e.stopPropagation();
+                onCheckboxChange(e);
+              }}
             />
           )}
         </>

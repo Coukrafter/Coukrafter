@@ -12,7 +12,7 @@ export default function Sidebar() {
       <h1 className="font-bold text-2xl">
         {todoListTitle || "Loading todo list"}
       </h1>
-      <hr className="border-accent" />
+      <hr className="border-accent border-t-2" />
       <Searchbar />
       <ProgressSlider />
     </div>
