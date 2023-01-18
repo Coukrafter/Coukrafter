@@ -1,6 +1,5 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Card } from "src/components";
 
 type Props = {

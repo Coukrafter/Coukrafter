@@ -1,4 +1,5 @@
 import { SelectedProgress } from "../../components/Sidebar/ProgressSlider";
+
 import { FilterActions } from "./actions";
 
 export type FilterState = {

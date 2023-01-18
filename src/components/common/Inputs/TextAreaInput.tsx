@@ -1,4 +1,5 @@
-import { UseFormRegister, FieldValues, Path } from "react-hook-form";
+import { FieldValues, Path,UseFormRegister } from "react-hook-form";
+
 import InputWrapper from "./InputWrapper";
 
 type Props<T extends FieldValues> = {

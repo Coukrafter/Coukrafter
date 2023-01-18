@@ -1,21 +1,21 @@
 import { compose, curry, equals, filter } from "ramda";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
-import { AddNewItemCard, TaskItem, ListOfItems, Loader } from "src/components";
+import { AddNewItemCard, ListOfItems, Loader,TaskItem } from "src/components";
 import ItemInfoModal from "src/components/ItemInfoModal/ItemInfoModal";
 import { TodoItem } from "src/types/generalTypes";
+
 import {
   getSearchedValue,
   getSelectedProgress,
 } from "../features/Filter/selectors";
-
 import {
   todoListDeleteItem,
   todoListEditItem,
 } from "../features/TodoList/actions";
 import { getIsLoading, getTodoListItems } from "../features/TodoList/selectors";
 import { TodoItemFormMode } from "../types";
+
 import { SelectedProgress } from "./Sidebar/ProgressSlider";
 import TodoItemModalForm from "./TodoItemModalForm";
 

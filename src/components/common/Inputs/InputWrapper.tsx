@@ -1,6 +1,6 @@
-import { ReactNode } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { ReactNode } from "react";
 
 type Props = {
   label: string;

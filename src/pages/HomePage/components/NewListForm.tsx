@@ -1,9 +1,9 @@
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { TextInput } from "src/components";
 import { z } from "zod";
 
-import { TextInput } from "src/components";
-import { useDispatch } from "react-redux";
 import { todoListsSubmitNewList } from "../features/TodoListsList/actions";
 
 type Props = {};
@@ -20,12 +20,9 @@ const schema = z.object({
 
 export default function NewTodoListForm({}: Props) {
   const dispatch = useDispatch();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm<NewTodoListFormValues>({ resolver: zodResolver(schema) });
+  const { register, handleSubmit, reset } = useForm<NewTodoListFormValues>({
+    resolver: zodResolver(schema),
+  });
 
   const handleFormSubmit = (data: NewTodoListFormValues) => {
     dispatch(todoListsSubmitNewList(data.title));

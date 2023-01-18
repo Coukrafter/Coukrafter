@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import Sidebar from "./components/Sidebar/Sidebar";
 
+import Sidebar from "./components/Sidebar/Sidebar";
 import TodoList from "./components/TodoList";
 import { todoListFetch } from "./features/TodoList/actions";
 

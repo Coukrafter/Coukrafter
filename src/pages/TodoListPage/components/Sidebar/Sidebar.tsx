@@ -1,8 +1,9 @@
 import { useSelector } from "react-redux";
 
 import { getTodoListTitle } from "../../features/TodoList/selectors";
-import Searchbar from "./Searchbar";
+
 import ProgressSlider from "./ProgressSlider";
+import Searchbar from "./Searchbar";
 
 export default function Sidebar() {
   const todoListTitle = useSelector(getTodoListTitle);

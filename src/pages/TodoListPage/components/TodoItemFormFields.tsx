@@ -1,6 +1,5 @@
 import { FieldErrorsImpl, UseFormRegister } from "react-hook-form/dist/types";
-
-import { TextInput, TextAreaInput, DateInput } from "src/components";
+import { DateInput,TextAreaInput, TextInput } from "src/components";
 
 import { TodoItemFormValues } from "./TodoItemModalForm";
 

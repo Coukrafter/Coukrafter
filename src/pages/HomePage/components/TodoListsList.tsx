@@ -1,14 +1,14 @@
+import { equals } from "ramda";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { equals } from "ramda";
+import { AddNewItemCard, ListItem, ListOfItems, Loader } from "src/components";
 
-import { ListOfItems, ListItem, AddNewItemCard, Loader } from "src/components";
-
+import { todoListsFetch } from "../features/TodoListsList/actions";
 import {
   getIsLoading,
   getTodoLists,
 } from "../features/TodoListsList/selectors";
-import { todoListsFetch } from "../features/TodoListsList/actions";
+
 import NewListModal from "./NewListModal";
 
 export default function TodoLists() {

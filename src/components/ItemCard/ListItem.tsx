@@ -1,4 +1,5 @@
 import { TodoList } from "src/types/generalTypes";
+
 import { Card } from "../common";
 
 type Props = {

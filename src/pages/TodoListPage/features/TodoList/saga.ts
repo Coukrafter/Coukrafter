@@ -2,26 +2,22 @@ import { AxiosResponse } from "axios";
 import { all, call, put, select, takeLatest } from "redux-saga/effects";
 import { api } from "src/api";
 import { TodoListFetchResponse } from "src/types";
-import {
-  DeletedTodoItem,
-  NewTodoItem,
-  TodoItem,
-  TodoList,
-} from "src/types/generalTypes";
+import { DeletedTodoItem, TodoItem } from "src/types/generalTypes";
 import { getNewId } from "src/utils/utils";
+
 import {
+  TodoListDeleteItemAction,
+  todoListDeleteItemFailure,
+  todoListDeleteItemSuccess,
+  TodoListEditItemAction,
+  todoListEditItemFailure,
+  todoListEditItemSuccess,
+  TodoListFetchAction,
   todoListFetchFailure,
   todoListFetchSuccess,
-  TodoListFetchAction,
   TodoListSubmitNewItemAction,
-  todoListSubmitNewItemSuccess,
   todoListSubmitNewItemFailure,
-  TodoListDeleteItemAction,
-  todoListDeleteItemSuccess,
-  todoListDeleteItemFailure,
-  TodoListEditItemAction,
-  todoListEditItemSuccess,
-  todoListEditItemFailure,
+  todoListSubmitNewItemSuccess,
 } from "./actions";
 import { getTodoListId, getTodoListItems } from "./selectors";
 

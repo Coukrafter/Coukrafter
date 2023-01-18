@@ -1,10 +1,11 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect } from "react";
 import { useForm, useFormState } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-
 import { Modal } from "src/components";
 import { TodoItem } from "src/types/generalTypes";
+import { parseDateStringToInputValue } from "src/utils/dateUtils";
+import { z } from "zod";
 
 import {
   todoListEditItem,
@@ -13,8 +14,6 @@ import {
 import { TodoItemFormMode } from "../types";
 
 import TodoItemFormFields from "./TodoItemFormFields";
-import { useEffect } from "react";
-import { parseDateStringToInputValue } from "src/utils/dateUtils";
 
 type Props = {
   isOpen: boolean;

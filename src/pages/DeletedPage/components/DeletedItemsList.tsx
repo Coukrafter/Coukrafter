@@ -3,6 +3,7 @@ import { useQuery } from "react-query";
 import { ListOfItems, Loader } from "src/components";
 import DeletedItem from "src/components/ItemCard/DeletedItem";
 import ItemInfoModal from "src/components/ItemInfoModal/ItemInfoModal";
+
 import { fetchDeletedItems } from "../api/deletedItemsApi";
 
 export default function DeletedItemsList() {

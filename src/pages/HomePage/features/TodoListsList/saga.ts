@@ -5,13 +5,13 @@ import {
   TodoListsCreateNewListResponse,
   TodoListsFetchResponse,
 } from "src/types";
-import { TodoList } from "src/types/generalTypes";
+
 import {
   todoListsFetchFailure,
   todoListsFetchSuccess,
-  todoListsSubmitNewListSuccess,
-  todoListsSubmitNewListFailure,
   TodoListsSubmitNewListAction,
+  todoListsSubmitNewListFailure,
+  todoListsSubmitNewListSuccess,
 } from "./actions";
 
 const todoListsFetchApi = () =>

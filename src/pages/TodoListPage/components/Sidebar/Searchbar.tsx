@@ -1,4 +1,5 @@
 import { useDispatch } from "react-redux";
+
 import { filterChagngeSearchedValue } from "../../features/Filter/actions";
 
 export default function Searchbar() {

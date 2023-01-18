@@ -1,7 +1,8 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Layout from "./components/Layout/Layout";
+import { QueryClient,QueryClientProvider } from "react-query";
+import { BrowserRouter, Route,Routes } from "react-router-dom";
 import { DeletedPage, HomePage, NotFoundPage, TodoListPage } from "src/pages";
-import { QueryClientProvider, QueryClient } from "react-query";
+
+import Layout from "./components/Layout/Layout";
 
 const queryClient = new QueryClient();
 

@@ -1,4 +1,5 @@
 import { useDispatch } from "react-redux";
+
 import { filterSelectedProgressChange } from "../../features/Filter/actions";
 
 export type SelectedProgress = "all" | "finished" | "not-finished";
