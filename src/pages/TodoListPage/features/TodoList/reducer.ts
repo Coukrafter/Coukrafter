@@ -47,6 +47,6 @@ export function todoListReducer(
     }
 
     default:
-      return initialState;
+      return state;
   }
 }
