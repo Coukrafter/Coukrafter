@@ -5,7 +5,7 @@ export default function Navbar() {
     <header className="p-2">
       <div className="navbar bg-primary rounded-box shadow-xl">
         <div className="flex-1">
-          <a className="btn btn-ghost normal-case text-xl" href="/">
+          <a className="btn btn-ghost normal-case text-xl" href="/todo-app">
             Todo
           </a>
         </div>
@@ -13,7 +13,7 @@ export default function Navbar() {
           <nav>
             <ul className="menu menu-horizontal px-1">
               <li>
-                <a href="/">Home</a>
+                <a href="/todo-app">Home</a>
               </li>
               <li>
                 <a href="/deleted">Deleted</a>
