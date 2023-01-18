@@ -4,3 +4,4 @@ export { default as DateInput } from "./Inputs/DateInput";
 export { default as InputWrapper } from "./Inputs/InputWrapper";
 export { default as TextAreaInput } from "./Inputs/TextAreaInput";
 export { default as TextInput } from "./Inputs/TextInput";
+export { default as Loader } from "./Loader";

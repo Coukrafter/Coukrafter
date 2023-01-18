@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQuery } from "react-query";
-import { ListOfItems } from "src/components";
+import { ListOfItems, Loader } from "src/components";
 import DeletedItem from "src/components/ItemCard/DeletedItem";
 import ItemInfoModal from "src/components/ItemInfoModal/ItemInfoModal";
 import { fetchDeletedItems } from "../api/deletedItemsApi";
@@ -29,11 +29,12 @@ export default function DeletedItemsList() {
   };
 
   if (isLoading) {
-    return <></>;
+    return <Loader />;
   }
   if (isError || !isSuccess) {
     return <></>;
   }
+
   return (
     <>
       <ListOfItems>

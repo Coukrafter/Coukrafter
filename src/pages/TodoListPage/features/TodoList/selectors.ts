@@ -10,3 +10,5 @@ export const getTodoListTitle = (state: StoreState) =>
 
 export const getTodoListId = (state: StoreState) =>
   pathToState(state).todoList?.id;
+
+export const getIsLoading = (state: StoreState) => pathToState(state).isLoading;

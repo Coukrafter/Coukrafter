@@ -2,7 +2,7 @@ import { compose, curry, equals, filter } from "ramda";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { AddNewItemCard, TaskItem, ListOfItems } from "src/components";
+import { AddNewItemCard, TaskItem, ListOfItems, Loader } from "src/components";
 import ItemInfoModal from "src/components/ItemInfoModal/ItemInfoModal";
 import { TodoItem } from "src/types/generalTypes";
 import {
@@ -14,7 +14,7 @@ import {
   todoListDeleteItem,
   todoListEditItem,
 } from "../features/TodoList/actions";
-import { getTodoListItems } from "../features/TodoList/selectors";
+import { getIsLoading, getTodoListItems } from "../features/TodoList/selectors";
 import { TodoItemFormMode } from "../types";
 import { SelectedProgress } from "./Sidebar/ProgressSlider";
 import TodoItemModalForm from "./TodoItemModalForm";
@@ -43,6 +43,12 @@ export default function TodoList() {
     number | null
   >(null);
 
+  const dispatch = useDispatch();
+  const todoListItems = useSelector(getTodoListItems, equals);
+  const searchedValue = useSelector(getSearchedValue);
+  const selectedProgress = useSelector(getSelectedProgress);
+  const isLoading = useSelector(getIsLoading);
+
   const handleItemClick = (id: number) => {
     setIsItemInfoModalOpen(true);
     setCurrentlyOpenedItemId(id);
@@ -52,11 +58,6 @@ export default function TodoList() {
     setIsItemInfoModalOpen(false);
     setCurrentlyOpenedItemId(null);
   };
-
-  const dispatch = useDispatch();
-  const todoListItems = useSelector(getTodoListItems, equals);
-  const searchedValue = useSelector(getSearchedValue);
-  const selectedProgress = useSelector(getSelectedProgress);
 
   const filteredItems =
     todoListItems &&
@@ -85,6 +86,10 @@ export default function TodoList() {
     const itemToToggle = filteredItems?.find((item) => id === item.id);
     itemToToggle && dispatch(todoListEditItem({ ...itemToToggle, isChecked }));
   };
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <div>
