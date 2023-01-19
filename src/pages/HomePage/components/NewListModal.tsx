@@ -11,9 +11,7 @@ export default function NewListModal({ setIsOpen, isOpen }: Props) {
   const handleClose = () => {
     setIsOpen(false);
   };
-  const handleSubmit = () => {
-    setIsOpen(false);
-  };
+
   if (!isOpen) return null;
 
   return (
@@ -24,17 +22,13 @@ export default function NewListModal({ setIsOpen, isOpen }: Props) {
           <button className="btn" type="button" onClick={handleClose}>
             Close
           </button>
-          <button
-            className="btn btn-primary"
-            onClick={handleSubmit}
-            form={NEW_TODO_LIST_FORM_ID}
-          >
+          <button className="btn btn-primary" form={NEW_TODO_LIST_FORM_ID}>
             Submit
           </button>
         </>
       }
     >
-      <NewTodoListForm />
+      <NewTodoListForm setIsOpen={setIsOpen} />
     </Modal>
   );
 }
